@@ -20,7 +20,8 @@ export const signup = async (
     return next(
       new BadRequestsException(
         "User already exists",
-        ErrorCode.USER_ALREADY_EXISTS
+        ErrorCode.USER_ALREADY_EXISTS,
+        null
       )
     );
   }
