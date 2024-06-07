@@ -35,7 +35,7 @@ export const deleteAddress = async (req: Request, res: Response) => {
     );
   }
 };
-export const listddress = async (req: CustomRequest, res: Response) => {
+export const listaddress = async (req: CustomRequest, res: Response) => {
   const addresses = await prismaClient.address.findMany({
     where: {
       userId: req.user?.id,
@@ -55,8 +55,6 @@ export const updateAddress = async (req: CustomRequest, res: Response) => {
           id: validatedData.defaultBillingAddressId,
         },
       });
-      console.log("address", billingAddress);
-      console.log("user id", req.user?.id);
     } catch (error) {
       throw new NotFoundException(
         "Address not found",
@@ -101,4 +99,43 @@ export const updateAddress = async (req: CustomRequest, res: Response) => {
   });
 
   res.status(200).json({ message: "Address updated", data: updatedAddress });
+};
+
+export const listUsers = async (req: Request, res: Response) => {
+  const users = await prismaClient.user.findMany({
+    skip: Number(req.query.skip) || 0,
+    take: 10,
+  });
+
+  res.json(users);
+};
+export const getUserById = async (req: Request, res: Response) => {
+  try {
+    const user = await prismaClient.user.findFirst({
+      where: {
+        id: +req.params.id,
+      },
+      include: {
+        addresses: true,
+      },
+    });
+    res.json(user);
+  } catch (error) {
+    throw new NotFoundException("User not found", ErrorCode.USER_NOT_FOUND);
+  }
+};
+export const ChangeUserRole = async (req: Request, res: Response) => {
+  try {
+    const user = await prismaClient.user.update({
+      where: {
+        id: +req.params.id,
+      },
+      data: {
+        role: req.body.role,
+      },
+    });
+    res.json(user);
+  } catch (error) {
+    throw new NotFoundException("User not found", ErrorCode.USER_NOT_FOUND);
+  }
 };

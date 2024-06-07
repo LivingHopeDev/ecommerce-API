@@ -8,7 +8,7 @@ const rootRouter: Router = Router();
 
 rootRouter.use("/auth", authRoutes);
 rootRouter.use("/products", productRoute);
-rootRouter.use("/address", userRoutes);
+rootRouter.use("/user", userRoutes);
 rootRouter.use("/cart", cartRoutes);
 rootRouter.use("/order", orderRoute);
 
