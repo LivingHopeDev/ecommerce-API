@@ -6,6 +6,9 @@ import { errorMiddleware } from "./middlewares/error";
 const app: Express = express();
 app.use(express.json());
 app.use("/api", rootRouter);
+app.get("/", (req, res) => {
+  res.send("Hello from entry file");
+});
 
 export const prismaClient = new PrismaClient({
   log: ["query"],
@@ -28,8 +31,8 @@ export const prismaClient = new PrismaClient({
   },
 });
 app.use(errorMiddleware);
-app.listen(PORT, () => {
-  console.log("Server running on port 3001");
-});
+// app.listen(PORT, () => {
+//   console.log("Server running on port 3001");
+// });
 
 export default app;
