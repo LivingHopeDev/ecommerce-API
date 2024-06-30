@@ -111,6 +111,7 @@ export const getOrderById = async (req: CustomRequest, res: Response) => {
 };
 
 export const listAllOrders = async (req: Request, res: Response) => {
+  // THE ORDER STATUS CAN BE PROVIDED FOR FILTERING
   const orders = await prismaClient.order.findMany({
     skip: Number(req.query.skip) || 0,
     take: 10,

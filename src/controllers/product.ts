@@ -69,3 +69,22 @@ export const getProductById = async (req: Request, res: Response) => {
     );
   }
 };
+
+export const searchProduct = async (req: Request, res: Response) => {
+  const products = await prismaClient.product.findMany({
+    where: {
+      name: {
+        search: String(req.query.q),
+      },
+      description: {
+        search: String(req.query.q),
+      },
+      tags: {
+        search: String(req.query.q),
+      },
+    },
+    skip: Number(req.query.skip) || 0,
+    take: 10,
+  });
+  res.json(products);
+};

@@ -5,6 +5,7 @@ import {
   listProducts,
   deleteProduct,
   getProductById,
+  searchProduct,
 } from "../controllers/product";
 import { errorHandler } from "../error-handler";
 import { authMiddleware } from "../middlewares/auth";
@@ -14,6 +15,11 @@ productRoutes.post(
   "/",
   [authMiddleware, adminMiddleware],
   errorHandler(createProduct)
+);
+productRoutes.get(
+  "/search",
+  [authMiddleware, adminMiddleware],
+  errorHandler(searchProduct)
 );
 productRoutes.put(
   "/:id",

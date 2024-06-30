@@ -4,8 +4,12 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+
+//RUN "npx prisma generate" after adding the previewFeatures field
+// AFTER THAT, ADD TO THE MODEL THE COLUMN OF THE TABLE YOU WOULD LIKE TO SEARCH
 generator client {
   provider = "prisma-client-js"
+    previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -67,6 +71,7 @@ model User {
   updatedAt DateTime @updatedAt
   cartItems CartItem[]
   products OrderProduct[]
+  @@fulltext([name,description,tags])
   @@map("products")
  }
 
