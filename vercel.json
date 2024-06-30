@@ -2,8 +2,7 @@
   "builds": [
     {
       "src": "/src/index.ts",
-      "use": "@vercel/node",
-      "handler": "./src/index.ts"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
